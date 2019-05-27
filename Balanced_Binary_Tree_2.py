@@ -13,19 +13,55 @@ class BalancedBST:
         self.Root = None
         self.BSTArray=[]
 
-    def CreateFromArray(self, a):
+    def CreateFromArray(self, a ,len_a=0):
 	# создаём массив дерева BSTArray из заданного  массива a
         # шаг 0 сортируем исходный массив по возрастанию
         if not a:
-            return False
+            return None
         if self.BSTArray==[]:
             a=self.Sort_initial_data(a)
-        #шаг 1 определяем элементы дерева (кроме корневого)
+            len_a=len(a)
+        #шаг 1 определяем элементы дерева 
         middle=int((len(a))/2)
         node=BSTNode(a[middle],None)
         self.BSTArray.append(node)
         node.LeftChild=self.CreateFromArray(a[:middle])
         node.RightChild=self.CreateFromArray(a[middle+1:])
+        if len(self.BSTArray)==len_a:
+            index=0
+            index_max=0
+            q=0
+            while index_max<len_a:
+                index_max=index_max+2**(q)
+                q+=1
+            array_for_sort=[]
+            children=[]
+            parents=[]
+            parents.append(self.BSTArray[index])
+            array_for_sort.append(self.BSTArray[index])
+            while index+1<index_max:
+                for every_parent in parents:
+                    if every_parent.NodeKey!=None:
+                        if every_parent.LeftChild!=None:
+                            array_for_sort.append(every_parent.LeftChild)
+                            children.append(every_parent.LeftChild)
+                        else:
+                            every_parent.LeftChild=BSTNode(None,None)
+                            array_for_sort.append(every_parent.LeftChild)
+                            children.append(every_parent.LeftChild)
+                        if every_parent.RightChild!=None:
+                            array_for_sort.append(every_parent.RightChild)
+                            children.append(every_parent.RightChild)
+                        else:
+                            every_parent.RightChild=BSTNode(None,None)
+                            array_for_sort.append(every_parent.RightChild)
+                            children.append(every_parent.RightChild)
+                        index+=2
+                parents.clear()
+                for j in range(0,len(children)):
+                    parents.append(children[j])
+                children.clear()
+            self.BSTArray=array_for_sort
         return node
 
 			
@@ -41,24 +77,23 @@ class BalancedBST:
             output=[]
             TreeNode.Parent=None
             TreeNode.Level=levels+1
-            output.append(TreeNode.NodeKey)
+            output.append(TreeNode)
             parents.append(TreeNode)
             while parents!=[]:
                 levels+=1
-                #print(levels,"Уровень")
                 for everynode in parents:
-                        if everynode.LeftChild!=False:
+                        if everynode.LeftChild!=None:
                             everynode.LeftChild.Parent=everynode
                             everynode.LeftChild.Level=levels+1
-                            output.append(everynode.LeftChild.NodeKey)
+                            output.append(everynode.LeftChild)
                             children.append(everynode.LeftChild)
                         else:
                             output.append(None)
                             children.append(None)
-                        if everynode.RightChild!=False:
+                        if everynode.RightChild!=None:
                             everynode.RightChild.Parent=everynode
                             everynode.RightChild.Level=levels+1
-                            output.append(everynode.RightChild.NodeKey)
+                            output.append(everynode.RightChild)
                             children.append(everynode.RightChild)
                         else:
                             output.append(None)
@@ -73,7 +108,6 @@ class BalancedBST:
             q_ty=0
             for j in range(0,levels):
                 q_ty=q_ty+2**j
-            #print(q_ty,"Кол-во")
             output=output[:q_ty]
             self.Root=self.BSTArray[0]
             return output
@@ -139,11 +173,15 @@ class BalancedBST:
             return True
         else:
             return False
-"""
-a=[2,4,6,7,8,9,0,10]
+
+a=[2,4,6,7,8,9,0,10,16,567]
 BT=BalancedBST()
 BT.CreateFromArray(a)
+print(BT.BSTArray)
 print(BT.GenerateTree())
-print(BT.Root.LeftChild.LeftChild.LeftChild.NodeKey)
+print(BT.Root.NodeKey)
 print(BT.IsBalanced(BT.Root))
+"""
+for i in range(0,len(BT.BSTArray)):
+    print(BT.BSTArray[i].NodeKey)
 """
