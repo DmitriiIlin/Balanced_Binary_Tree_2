@@ -189,7 +189,7 @@ class BalancedBST:
         else:
             return False
 
-          
+"""          
 a=[2,4,6,7,8,9,0,10,16,567]
 b=[34,67,90,6]
 BT=BalancedBST()
@@ -197,5 +197,5 @@ BT.CreateFromArray(b)
 print(BT.BSTArray)
 BT.GenerateTree()
 print(BT.IsBalanced(BT.Root))
-
+"""
 
