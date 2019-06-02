@@ -80,8 +80,14 @@ class BalancedBST:
         while j<len(self.BSTArray):
             if j==0:
                 tree_array[j].Parent=None
-                tree_array[j].LeftChild=tree_array[2*j+1]
-                tree_array[j].RightChild=tree_array[2*j+2]
+                if len(self.BSTArray)>2*j+1:
+                    tree_array[j].LeftChild=tree_array[2*j+1]
+                else:
+                    tree_array[j].LeftChild=None
+                if len(self.BSTArray)>2*j+2:
+                    tree_array[j].RightChild=tree_array[2*j+2]
+                else:
+                    tree_array[j].RightChild=None
             elif 2*j+1<len(self.BSTArray) and j!=0:
                 tree_array[2*j+1].Parent=tree_array[j]
                 tree_array[j].LeftChild=tree_array[2*j+1]
@@ -131,6 +137,8 @@ class BalancedBST:
 
     def IsBalanced(self, root_node):
         if root_node!=None:
+            if root_node.LeftChild==None and root_node.RightChild==None:
+                return True
             #Блок проверки больше, меньше значение NodeKey
             if root_node.LeftChild.NodeKey!=None:
                 if root_node.NodeKey>root_node.LeftChild.NodeKey:
@@ -150,8 +158,9 @@ class BalancedBST:
                 Right=True
             if Right!=True and Left!=True:
                 return False
-            height_res=self.heightBalanced(root_node)
-            return height_res
+            else:
+                height_res=self.heightBalanced(root_node)
+                return height_res
             
     
     def height(self,root_node):
@@ -180,12 +189,13 @@ class BalancedBST:
         else:
             return False
 
-"""            
+          
 a=[2,4,6,7,8,9,0,10,16,567]
+b=[34,67,90,6]
 BT=BalancedBST()
-BT.CreateFromArray(a)
+BT.CreateFromArray(b)
 print(BT.BSTArray)
 BT.GenerateTree()
 print(BT.IsBalanced(BT.Root))
-"""
+
 
