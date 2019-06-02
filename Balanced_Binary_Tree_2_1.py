@@ -71,7 +71,7 @@ class BalancedBST:
 	# создаём дерево с нуля из массива BSTArray
         if len(self.BSTArray)==0:
             return False
-        levels=0
+        levels=1
         j=0
         tree_array=[]
         for i in range(0,len(self.BSTArray)):
