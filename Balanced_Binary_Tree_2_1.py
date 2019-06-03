@@ -18,6 +18,9 @@ class BalancedBST:
         # шаг 0 сортируем исходный массив по возрастанию
         if not a:
             return None
+        for everydigit in range(0,len(a)):
+            if a[everydigit]==None:
+                return None
         if self.BSTArray==[]:
             a=self.Sort_initial_data(a)
             len_a=len(a)
@@ -136,6 +139,16 @@ class BalancedBST:
         return a
 
     def IsBalanced(self, root_node):
+        if isinstance(root_node,BSTNode)==True:
+            pass
+        else:
+            return False
+        in_tree=False
+        for every_node_Key in self.BSTArray:
+            if self.BSTArray[every_node_Key]==root_node.NodeKey:
+                in_tree=True
+        if in_tree==False:
+            return False
         if root_node!=None:
             if root_node.LeftChild==None and root_node.RightChild==None:
                 return True
@@ -189,13 +202,12 @@ class BalancedBST:
         else:
             return False
 
-"""          
+"""         
 a=[2,4,6,7,8,9,0,10,16,567]
-b=[34,67,90,6]
+b=[2,4,56]
 BT=BalancedBST()
 BT.CreateFromArray(b)
 print(BT.BSTArray)
 BT.GenerateTree()
-print(BT.IsBalanced(BT.Root))
+print(BT.IsBalanced(BT.Root.LeftChild.LeftChild))
 """
-
