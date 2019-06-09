@@ -145,8 +145,10 @@ class BalancedBST:
             return False
         in_tree=False
         for every_node_Key in self.BSTArray:
-            if self.BSTArray[every_node_Key]==root_node.NodeKey:
+            if every_node_Key==root_node.NodeKey:
                 in_tree=True
+            else:
+                in_tree=False
         if in_tree==False:
             return False
         if root_node!=None:
@@ -209,5 +211,5 @@ BT=BalancedBST()
 BT.CreateFromArray(b)
 print(BT.BSTArray)
 BT.GenerateTree()
-print(BT.IsBalanced(BT.Root.LeftChild.LeftChild))
+print(BT.IsBalanced(BSTNode(23,None)))
 """
