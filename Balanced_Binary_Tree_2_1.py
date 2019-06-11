@@ -161,7 +161,7 @@ class BalancedBST:
                     Left=True
                 else:
                     Left=False
-            elif root_node.LeftChild.NodeKey==None:
+            elif root_node.LeftChild==None:
                 Left=True
             else:
                 pass
@@ -170,7 +170,7 @@ class BalancedBST:
                     Right=True
                 else:
                     Right=False
-            elif root_node.RightChild.NodeKey==None:
+            elif root_node.RightChild==None:
                 Right=True
             if Right!=True and Left!=True:
                 return False
@@ -207,9 +207,9 @@ class BalancedBST:
 
 """       
 a=[50,25,75,20,37,62,84,19,21,31,43,55,70,80,92]
-b=[2,4,56]
+b=[2,4,56,65,33,87,96,345]
 BT=BalancedBST()
-BT.CreateFromArray(a)
+BT.CreateFromArray(b)
 print(BT.BSTArray)
 BT.GenerateTree()
 print(BT.IsBalanced(BT.Root))
