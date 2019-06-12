@@ -139,6 +139,7 @@ class BalancedBST:
         return a
 
     def IsBalanced(self, root_node):
+        #Проверка сбалансированности дерева
         if isinstance(root_node,BSTNode)==True:
             pass
         else:
@@ -152,32 +153,49 @@ class BalancedBST:
                 in_tree=False
         if in_tree==False:
             return False
-        if root_node!=None:
-            if root_node.LeftChild==None and root_node.RightChild==None:
-                return True
-            #Блок проверки больше, меньше значение NodeKey
-            if root_node.LeftChild.NodeKey!=None:
-                if root_node.NodeKey>root_node.LeftChild.NodeKey:
-                    Left=True
+        B_height=self.heightBalanced(root_node)
+        B_comparison=self.comparison(root_node)
+        if B_height==True and B_comparison==True:
+            return True
+        else:
+            return False
+
+    def comparison(self,root_node):
+        #Выполняет сравнение ключей
+        parents=[]
+        children=[]
+        if root_node!=None and root_node.NodeKey!=None:
+            parents.append(root_node)
+        else:
+            return True
+        while len(parents)!=0:
+            if parents[0].NodeKey!=None:
+                if parents[0].LeftChild!=None:
+                    if parents[0].LeftChild.NodeKey!=None:
+                        if parents[0].LeftChild.NodeKey<parents[0].NodeKey:
+                            children.append(parents[0].LeftChild)
+                        else:
+                            return False
+                    else:
+                        pass
                 else:
-                    Left=False
-            elif root_node.LeftChild==None:
-                Left=True
+                    pass
+                if parents[0].RightChild!=None:
+                    if parents[0].RightChild.NodeKey!=None:
+                        if parents[0].RightChild.NodeKey>=parents[0].NodeKey:
+                            children.append(parents[0].RightChild)
+                        else:
+                            return False
+                    else:
+                        pass
+                else:
+                    pass
+                parents.pop(0)
+                parents.extend(children)
+                children.clear()
             else:
                 pass
-            if root_node.RightChild.NodeKey!=None:
-                if root_node.RightChild.NodeKey>root_node.NodeKey:
-                    Right=True
-                else:
-                    Right=False
-            elif root_node.RightChild==None:
-                Right=True
-            if Right!=True and Left!=True:
-                return False
-            else:
-                height_res=self.heightBalanced(root_node)
-                return height_res
-            
+        return True
     
     def height(self,root_node):
         # Определяет глубину дерева
@@ -205,11 +223,11 @@ class BalancedBST:
         else:
             return False
 
-"""       
+"""    
 a=[50,25,75,20,37,62,84,19,21,31,43,55,70,80,92]
 b=[2,4,56,65,33,87,96,345]
 BT=BalancedBST()
-BT.CreateFromArray(b)
+BT.CreateFromArray(a)
 print(BT.BSTArray)
 BT.GenerateTree()
 print(BT.IsBalanced(BT.Root))
